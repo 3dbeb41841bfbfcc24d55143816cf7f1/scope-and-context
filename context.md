@@ -96,6 +96,7 @@ var instructor = {
   name: "Adam Bray",
   favoriteFoods: ["Ramen", "Cap'n Crunch", "Butter"],
   displayFoods: function() {
+    console.log('Favorite foods for', this.name);
     this.favoriteFoods.forEach(function(food) {
       console.log(this.name + " likes " + food);
     })
