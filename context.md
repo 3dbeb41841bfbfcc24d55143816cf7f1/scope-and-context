@@ -29,7 +29,7 @@ context is always an object, and can be referenced in the function definition
 Here's an example of the most common way context is determined for a function:
 when a method is called on an object, that object becomes the context:
 
-```js
+```javascript
 var instructor = {
   name: "Adam Bray",
   favoriteFood: "Spicy Miso Ramen",
@@ -44,7 +44,7 @@ instructor.sayHello() // for this function invocation, `this` is `instructor`
 This feature allows not just 'getting' property info on objects, but also
 setting properties. Consider this example:
 
-```js
+```javascript
 var xwing = {
     pilot: null,
 
@@ -73,7 +73,7 @@ default context. In a browser, the default context is the `window` object.
 
 In node.js, the default object is called the global object.
 
-```js
+```javascript
 function revealThis() {
   console.log(this);
 }
@@ -91,7 +91,7 @@ easy/common mistake for new and even experienced JS developers).
 
 Consider the following example:
 
-```js
+```javascript
 var instructor = {
   name: "Adam Bray",
   favoriteFoods: ["Ramen", "Cap'n Crunch", "Butter"],
@@ -106,19 +106,16 @@ var instructor = {
 instructor.displayFoods();
 ```
 
-Using what we know about context, predict what the value of this will be on both
-lines where if is used.
+Using what we know about context, predict what the value of `this` will be on the lines where `this` is used.
 
 ### Answer
 
 In the first case, `this` behaves like we would expect, (it references
 `instructor` since it's inside a function attached to an `instructor`.
 
-In the second case, `this` is inside an anonymous function, so it refers to the
-global object.
+In the second case, `this` is inside an anonymous function, so it refers to the global object.
 
-Note that this issue frequently appears anytime we use a callback / anonymous
-function, such as:
+Note that this issue frequently appears anytime we use a callback / anonymous function, such as:
 
 * using `setTimeout()` or `setInterval()` to schedule callbacks
 * using `forEach()` or other iteration functions
@@ -128,16 +125,16 @@ function, such as:
 
 ### Store `this` in another variable
 
-One trick is to store the `this` you want in another variable, commonly named
-`self` or `that`.
+One trick is to store the `this` you want in another variable, commonly named `self` or `that`.
 
-```js
+```javascript
 var instructor = {
   name: "Adam Bray",
   favoriteFoods: ["Ramen", "Cap'n Crunch", "Butter"],
   displayFoods: function() {
     var self = this;
-    this.favoriteFoods.forEach(function(food) {
+    console.log('Favorite foods for', self.name);
+    self.favoriteFoods.forEach(function(food) {
       console.log(self.name + " likes " + food);
     })
   }
@@ -146,21 +143,21 @@ var instructor = {
 instructor.displayFoods();
 ```
 
-**Mini-exercise**: Use what we know about scope to explain why this works.
+**Mini-exercise**: Use what we know about scope to explain why this fix works.
 
 ### Bind
 
-Another way is to use the bind method on the function to force the function to
-always use the specified value as it's context.
+Another way is to use the `bind` method on the function to force the function to always use the specified value as it's context.
 
-```js
+```javascript
 var instructor = {
   name: "Adam Bray",
   favoriteFoods: ["Ramen", "Cap'n Crunch", "Butter"],
   displayFoods: function() {
+    console.log('Favorite foods for', this.name);
     this.favoriteFoods.forEach(function(food) {
       console.log(this.name + " likes " + food);
-    }.bind(this))
+    }.bind(this));
   }
 }
 
@@ -169,9 +166,9 @@ instructor.displayFoods();
 
 ## Exercise: Cat Surprise
 
-Fork [this codepen](http://codepen.io/adambray/pen/domXyg?editors=101).
+Fork [this codepen](http://codepen.io/drmikeh/pen/ZORARa?editors=1010).
 
-Notice that it's broken! Fix the JS so that clicking the image correctly alerts us to Mr. McWhiskertons' favorite pastimes.
+Notice that it's broken! Fix the JavaScript so that clicking the image correctly alerts us to Mr. McWhiskertons' favorite pastimes.
 
 ## Call/Apply
 
@@ -180,7 +177,7 @@ very similar: `call` and `apply`.
 
 Here's an example of how to use call:
 
-```js
+```javascript
 function sayHello() {
   console.log("Hi! My name is " + this.name);
 }
@@ -193,7 +190,7 @@ sayHello.call(cat);
 
 `call` also lets us pass in the arguments to the function:
 
-```js
+```javascript
 function sayHello(favColor) {
   console.log("Hi! My name is " + this.name + " and I like " + favColor);
 }
